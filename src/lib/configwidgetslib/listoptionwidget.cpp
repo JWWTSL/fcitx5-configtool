@@ -213,6 +213,10 @@ void ListOptionWidget::writeValueTo(QVariantMap &map) {
 
 void ListOptionWidget::restoreToDefault() {
     model_->readValueFrom(defaultValue_, "");
+    // readValueFrom() only resets the model, which is not connected to
+    // valueChanged() (loading must stay silent). Report the user-initiated
+    // restore explicitly so the Apply button becomes enabled.
+    Q_EMIT valueChanged();
 }
 
 } // namespace kcm
